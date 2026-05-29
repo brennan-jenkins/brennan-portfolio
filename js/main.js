@@ -59,8 +59,8 @@ updateHeaderOnScroll();
 
 // ─── Mobile navigation ───
 const navToggle = document.querySelector('.nav-toggle');
-const navOverlay = document.getElementById('mobile-nav-overlay');
-const navLinks = document.getElementById('primary-navigation');
+const navMenu = document.getElementById('primary-navigation');
+const navBackdrop = document.getElementById('mobile-nav-backdrop');
 const mobileMq = window.matchMedia('(max-width: 768px)');
 const NAV_ANIM_MS = prefersReducedMotion ? 0 : 520;
 let menuPreviouslyFocused = null;
@@ -71,12 +71,12 @@ function isMobileNav() {
 }
 
 function isNavOpen() {
-  return navOverlay?.classList.contains('is-open');
+  return navMenu?.classList.contains('is-open');
 }
 
 function getNavFocusables() {
-  if (!navLinks) return [];
-  return [...navLinks.querySelectorAll('a[href], button:not([disabled])')];
+  if (!navMenu) return [];
+  return [...navMenu.querySelectorAll('a[href], button:not([disabled])')];
 }
 
 function setNavToggleLabel(isOpen) {
@@ -86,24 +86,16 @@ function setNavToggleLabel(isOpen) {
 }
 
 function updateNavPanelState() {
-  if (!navOverlay || !navLinks) return;
+  if (!navMenu) return;
   const open = isNavOpen();
 
   if (isMobileNav()) {
-    navOverlay.setAttribute('aria-hidden', open ? 'false' : 'true');
-    if (open) {
-      navOverlay.removeAttribute('inert');
-    } else if (!navOverlay.classList.contains('is-closing')) {
-      navOverlay.setAttribute('inert', '');
-    }
     getNavFocusables().forEach((el) => {
       if (!open) el.setAttribute('tabindex', '-1');
       else el.removeAttribute('tabindex');
     });
   } else {
-    navOverlay.classList.remove('is-open', 'is-closing');
-    navOverlay.removeAttribute('inert');
-    navOverlay.removeAttribute('aria-hidden');
+    navMenu.classList.remove('is-open', 'is-closing');
     navToggle?.classList.remove('active');
     document.body.classList.remove('nav-open');
     getNavFocusables().forEach((el) => el.removeAttribute('tabindex'));
@@ -113,23 +105,21 @@ function updateNavPanelState() {
 }
 
 function closeMobileNav(restoreFocus = true) {
-  if (!navOverlay || !isNavOpen()) return;
+  if (!navMenu || !isNavOpen()) return;
 
   if (navCloseTimer) {
     window.clearTimeout(navCloseTimer);
     navCloseTimer = null;
   }
 
-  navOverlay.classList.add('is-closing');
-  navOverlay.classList.remove('is-open');
+  navMenu.classList.add('is-closing');
+  navMenu.classList.remove('is-open');
   navToggle?.classList.remove('active');
   document.body.classList.remove('nav-open');
   setNavToggleLabel(false);
 
   const finish = () => {
-    navOverlay.classList.remove('is-closing');
-    navOverlay.setAttribute('inert', '');
-    navOverlay.setAttribute('aria-hidden', 'true');
+    navMenu.classList.remove('is-closing');
     getNavFocusables().forEach((el) => el.setAttribute('tabindex', '-1'));
     if (restoreFocus && menuPreviouslyFocused) {
       menuPreviouslyFocused.focus();
@@ -144,7 +134,7 @@ function closeMobileNav(restoreFocus = true) {
 }
 
 function openMobileNav() {
-  if (!navOverlay || !isMobileNav()) return;
+  if (!navMenu || !isMobileNav()) return;
 
   if (navCloseTimer) {
     window.clearTimeout(navCloseTimer);
@@ -152,10 +142,8 @@ function openMobileNav() {
   }
 
   menuPreviouslyFocused = document.activeElement;
-  navOverlay.classList.remove('is-closing');
-  navOverlay.removeAttribute('inert');
-  navOverlay.setAttribute('aria-hidden', 'false');
-  navOverlay.classList.add('is-open');
+  navMenu.classList.remove('is-closing');
+  navMenu.classList.add('is-open');
   navToggle?.classList.add('active');
   document.body.classList.add('nav-open');
   setNavToggleLabel(true);
@@ -171,10 +159,8 @@ navToggle?.addEventListener('click', () => {
   }
 });
 
-navOverlay?.addEventListener('click', (e) => {
-  if (e.target === navOverlay) {
-    closeMobileNav();
-  }
+navBackdrop?.addEventListener('click', () => {
+  closeMobileNav();
 });
 
 document.addEventListener('keydown', (e) => {
