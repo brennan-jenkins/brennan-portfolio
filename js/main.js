@@ -337,9 +337,12 @@ if (!prefersReducedMotion) {
   });
 }
 
-// ─── Contact form ───
+// ─── Contact form (Web3Forms native POST — https://web3forms.com) ───
 const contactForm = document.querySelector('.contact-form');
 const formStatus = document.getElementById('form-status');
+const formRedirect = document.getElementById('form-redirect');
+const formSubject = document.getElementById('form-subject');
+const formAccessKey = document.getElementById('web3forms-access-key');
 
 function setFormStatus(message, isError = false) {
   if (!formStatus) return;
@@ -354,90 +357,90 @@ function validateField(field) {
 }
 
 const formFields = () =>
-  [...contactForm.querySelectorAll('input:not([name="botcheck"]), textarea')];
+  [...contactForm.querySelectorAll('#name, #email, #message')];
 
-contactForm?.querySelectorAll('input:not([name="botcheck"]), textarea').forEach((field) => {
-  field.addEventListener('blur', () => validateField(field));
-  field.addEventListener('input', () => {
-    if (field.getAttribute('aria-invalid') === 'true') {
-      validateField(field);
-    }
-  });
-});
-
-contactForm?.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  setFormStatus('');
-
-  const fields = formFields();
-  const allValid = fields.every((field) => validateField(field));
-
-  if (!allValid) {
-    setFormStatus('Please correct the highlighted fields before sending.', true);
-    fields.find((f) => !f.checkValidity())?.focus();
-    return;
+function setupWeb3Forms() {
+  const configKey = window.PORTFOLIO_FORM?.web3formsAccessKey?.trim();
+  if (configKey && formAccessKey) {
+    formAccessKey.value = configKey;
   }
 
-  if (contactForm.querySelector('[name="botcheck"]')?.checked) {
-    return;
+  if (formRedirect) {
+    const returnUrl = new URL(window.location.href.split('#')[0]);
+    returnUrl.searchParams.set('sent', '1');
+    returnUrl.hash = 'contact';
+    formRedirect.value = returnUrl.toString();
   }
+}
 
-  const accessKey = window.PORTFOLIO_FORM?.web3formsAccessKey?.trim();
-  if (!accessKey) {
-    setFormStatus(
-      'Form is not set up yet — please use the email link above, or add your Web3Forms key in js/form-config.js.',
-      true
-    );
-    return;
-  }
+function showSentConfirmation() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('sent') !== '1') return;
 
-  const btn = contactForm.querySelector('button[type="submit"]');
-  const original = btn.textContent;
-  btn.textContent = 'Sending…';
-  btn.disabled = true;
-  btn.setAttribute('aria-busy', 'true');
+  setFormStatus('Thank you — your message was sent. I\'ll get back to you soon.');
+  contactForm?.reset();
+  formFields().forEach((f) => f.setAttribute('aria-invalid', 'false'));
 
-  const name = contactForm.querySelector('#name')?.value.trim() ?? '';
-  const email = contactForm.querySelector('#email')?.value.trim() ?? '';
-  const message = contactForm.querySelector('#message')?.value.trim() ?? '';
+  const cleanUrl = new URL(window.location.href);
+  cleanUrl.searchParams.delete('sent');
+  window.history.replaceState({}, '', cleanUrl.pathname + cleanUrl.hash);
+}
 
-  try {
-    const response = await fetch('https://api.web3forms.com/submit', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-      body: JSON.stringify({
-        access_key: accessKey,
-        name,
-        email,
-        message,
-        subject: `Portfolio enquiry from ${name}`,
-        from_name: 'Brennan Jenkins portfolio',
-      }),
+if (contactForm) {
+  setupWeb3Forms();
+  showSentConfirmation();
+
+  contactForm.querySelectorAll('#name, #email, #message').forEach((field) => {
+    field.addEventListener('blur', () => validateField(field));
+    field.addEventListener('input', () => {
+      if (field.getAttribute('aria-invalid') === 'true') {
+        validateField(field);
+      }
     });
+  });
 
-    const result = await response.json();
+  contactForm.addEventListener('submit', (e) => {
+    setFormStatus('');
 
-    if (!response.ok || !result.success) {
-      throw new Error(result.message || 'Unable to send message');
+    const fields = formFields();
+    const allValid = fields.every((field) => validateField(field));
+
+    if (!allValid) {
+      e.preventDefault();
+      setFormStatus('Please correct the highlighted fields before sending.', true);
+      fields.find((f) => !f.checkValidity())?.focus();
+      return;
     }
 
-    setFormStatus('Thank you — your message was sent. I\'ll get back to you soon.');
-    contactForm.reset();
-    fields.forEach((f) => f.setAttribute('aria-invalid', 'false'));
-  } catch {
-    setFormStatus(
-      'Something went wrong sending your message. Please email brennans1994@gmail.com directly.',
-      true
-    );
-  } finally {
-    btn.textContent = original;
-    btn.disabled = false;
-    btn.removeAttribute('aria-busy');
-  }
-});
+    if (contactForm.querySelector('[name="botcheck"]')?.checked) {
+      e.preventDefault();
+      return;
+    }
+
+    if (!formAccessKey?.value.trim()) {
+      e.preventDefault();
+      setFormStatus(
+        'Form is not set up yet — please use the email link above.',
+        true
+      );
+      return;
+    }
+
+    const name = contactForm.querySelector('#name')?.value.trim() ?? '';
+    if (formSubject) {
+      formSubject.value = `Portfolio enquiry from ${name}`;
+    }
+
+    setupWeb3Forms();
+
+    const btn = contactForm.querySelector('button[type="submit"]');
+    if (btn) {
+      btn.textContent = 'Sending…';
+      btn.setAttribute('aria-busy', 'true');
+    }
+    // Browser posts to https://api.web3forms.com/submit, then redirects back
+  });
+}
 
 // ─── Footer year ───
 const yearEl = document.getElementById('year');
