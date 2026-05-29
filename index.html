@@ -439,14 +439,24 @@
 
         <form
           class="contact-form reveal reveal-delay-2"
+          action="https://api.web3forms.com/submit"
+          method="POST"
           aria-describedby="form-hint"
           novalidate
         >
+          <input type="hidden" name="access_key" id="web3forms-access-key" value="769f249a-bbd0-4051-9866-3df81e38d242">
+          <input type="hidden" name="subject" id="form-subject" value="Portfolio enquiry">
+          <input type="hidden" name="redirect" id="form-redirect" value="">
+          <input type="hidden" name="from_name" value="Brennan Jenkins portfolio">
           <p id="form-hint" class="form-hint">All fields are required.</p>
-          <div class="form-honeypot" aria-hidden="true">
-            <label for="botcheck">Leave blank</label>
-            <input type="checkbox" id="botcheck" name="botcheck" tabindex="-1" autocomplete="off">
-          </div>
+          <input
+            type="checkbox"
+            name="botcheck"
+            class="form-honeypot"
+            tabindex="-1"
+            autocomplete="off"
+            aria-hidden="true"
+          >
           <div class="form-group">
             <label for="name">Name <span class="required-mark" aria-hidden="true">*</span></label>
             <input
