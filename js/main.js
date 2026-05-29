@@ -353,7 +353,10 @@ function validateField(field) {
   return valid;
 }
 
-contactForm?.querySelectorAll('input, textarea').forEach((field) => {
+const formFields = () =>
+  [...contactForm.querySelectorAll('input:not([name="botcheck"]), textarea')];
+
+contactForm?.querySelectorAll('input:not([name="botcheck"]), textarea').forEach((field) => {
   field.addEventListener('blur', () => validateField(field));
   field.addEventListener('input', () => {
     if (field.getAttribute('aria-invalid') === 'true') {
@@ -362,16 +365,29 @@ contactForm?.querySelectorAll('input, textarea').forEach((field) => {
   });
 });
 
-contactForm?.addEventListener('submit', (e) => {
+contactForm?.addEventListener('submit', async (e) => {
   e.preventDefault();
   setFormStatus('');
 
-  const fields = [...contactForm.querySelectorAll('input, textarea')];
+  const fields = formFields();
   const allValid = fields.every((field) => validateField(field));
 
   if (!allValid) {
     setFormStatus('Please correct the highlighted fields before sending.', true);
     fields.find((f) => !f.checkValidity())?.focus();
+    return;
+  }
+
+  if (contactForm.querySelector('[name="botcheck"]')?.checked) {
+    return;
+  }
+
+  const accessKey = window.PORTFOLIO_FORM?.web3formsAccessKey?.trim();
+  if (!accessKey) {
+    setFormStatus(
+      'Form is not set up yet — please use the email link above, or add your Web3Forms key in js/form-config.js.',
+      true
+    );
     return;
   }
 
@@ -381,14 +397,46 @@ contactForm?.addEventListener('submit', (e) => {
   btn.disabled = true;
   btn.setAttribute('aria-busy', 'true');
 
-  setTimeout(() => {
+  const name = contactForm.querySelector('#name')?.value.trim() ?? '';
+  const email = contactForm.querySelector('#email')?.value.trim() ?? '';
+  const message = contactForm.querySelector('#message')?.value.trim() ?? '';
+
+  try {
+    const response = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify({
+        access_key: accessKey,
+        name,
+        email,
+        message,
+        subject: `Portfolio enquiry from ${name}`,
+        from_name: 'Brennan Jenkins portfolio',
+      }),
+    });
+
+    const result = await response.json();
+
+    if (!response.ok || !result.success) {
+      throw new Error(result.message || 'Unable to send message');
+    }
+
+    setFormStatus('Thank you — your message was sent. I\'ll get back to you soon.');
+    contactForm.reset();
+    fields.forEach((f) => f.setAttribute('aria-invalid', 'false'));
+  } catch {
+    setFormStatus(
+      'Something went wrong sending your message. Please email brennans1994@gmail.com directly.',
+      true
+    );
+  } finally {
     btn.textContent = original;
     btn.disabled = false;
     btn.removeAttribute('aria-busy');
-    setFormStatus('Thank you — your message was sent successfully.');
-    contactForm.reset();
-    fields.forEach((f) => f.setAttribute('aria-invalid', 'false'));
-  }, 1200);
+  }
 });
 
 // ─── Footer year ───
