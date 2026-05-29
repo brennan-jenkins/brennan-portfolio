@@ -381,6 +381,95 @@ contactForm?.addEventListener('submit', (e) => {
 const yearEl = document.getElementById('year');
 if (yearEl) yearEl.textContent = new Date().getFullYear();
 
+// ─── Skills marquee (seamless loop: duplicated segments + rAF scroll) ───
+(function initMarquee() {
+  const track = document.querySelector('.marquee-track');
+  const seedGroup = track?.querySelector('.marquee-group');
+  if (!track || !seedGroup) return;
+
+  let offset = 0;
+  let loopWidth = 0;
+  let lastTime = 0;
+  let running = false;
+  const pxPerSecond = prefersReducedMotion ? 40 : 72;
+
+  /** Enough identical copies that the viewport is never empty while we reset offset. */
+  function ensureCopies() {
+    let groups = track.querySelectorAll('.marquee-group');
+    const minTrackWidth = window.innerWidth * 2;
+
+    while (groups.length < 2 || track.scrollWidth < minTrackWidth) {
+      if (groups.length >= 10) break;
+      track.appendChild(seedGroup.cloneNode(true));
+      groups = track.querySelectorAll('.marquee-group');
+    }
+  }
+
+  function measure() {
+    ensureCopies();
+    const groups = track.querySelectorAll('.marquee-group');
+    const first = groups[0];
+    const second = groups[1];
+    if (!first) return;
+
+    loopWidth =
+      second && second.offsetLeft > first.offsetLeft
+        ? second.offsetLeft - first.offsetLeft
+        : first.offsetWidth;
+
+    if (loopWidth > 0 && offset <= -loopWidth) {
+      offset = offset % loopWidth;
+      if (offset > 0) offset -= loopWidth;
+    }
+  }
+
+  function tick(now) {
+    requestAnimationFrame(tick);
+
+    if (!loopWidth) {
+      measure();
+      return;
+    }
+
+    if (document.hidden) {
+      lastTime = 0;
+      return;
+    }
+
+    if (!lastTime) lastTime = now;
+    const delta = Math.min((now - lastTime) / 1000, 0.05);
+    lastTime = now;
+
+    offset -= pxPerSecond * delta;
+    while (offset <= -loopWidth) {
+      offset += loopWidth;
+    }
+
+    track.style.transform = `translate3d(${offset}px, 0, 0)`;
+  }
+
+  function start() {
+    if (running) return;
+    running = true;
+    measure();
+    requestAnimationFrame(tick);
+  }
+
+  ensureCopies();
+  measure();
+  if (document.fonts?.ready) {
+    document.fonts.ready.then(() => {
+      measure();
+    });
+  }
+  start();
+
+  window.addEventListener('resize', measure, { passive: true });
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) lastTime = 0;
+  });
+})();
+
 // ─── Project screenshot carousel (Career Mode) ───
 document.querySelectorAll('[data-carousel]').forEach((root) => {
   const slides = [...root.querySelectorAll('.project-carousel-slides img')];
