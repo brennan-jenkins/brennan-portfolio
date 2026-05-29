@@ -8,13 +8,16 @@
   }
 
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 100);
-  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  const camera = new THREE.PerspectiveCamera(60, 1, 0.1, 100);
+  const renderer = new THREE.WebGLRenderer({
+    canvas,
+    alpha: true,
+    antialias: false,
+    powerPreference: 'high-performance',
+  });
   camera.position.z = 4;
 
-  const particleCount = 1000;
+  const particleCount = window.innerWidth < 768 ? 500 : 750;
   const positions = new Float32Array(particleCount * 3);
   const colors = new Float32Array(particleCount * 3);
 
@@ -62,21 +65,46 @@
   let rafId = null;
   let time = 0;
 
-  hero?.addEventListener('mousemove', (e) => {
-    const rect = hero.getBoundingClientRect();
-    mouse.targetX = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
-    mouse.targetY = -((e.clientY - rect.top) / rect.height - 0.5) * 2;
-  }, { passive: true });
+  function resizeRenderer() {
+    const w = canvas.clientWidth;
+    const h = canvas.clientHeight;
+    if (w < 1 || h < 1) return false;
 
-  hero?.addEventListener('mouseleave', () => {
-    mouse.targetX = 0;
-    mouse.targetY = 0;
-  }, { passive: true });
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+    renderer.setSize(w, h, false);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+    return true;
+  }
+
+  hero?.addEventListener(
+    'mousemove',
+    (e) => {
+      const rect = hero.getBoundingClientRect();
+      mouse.targetX = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
+      mouse.targetY = -((e.clientY - rect.top) / rect.height - 0.5) * 2;
+    },
+    { passive: true }
+  );
+
+  hero?.addEventListener(
+    'mouseleave',
+    () => {
+      mouse.targetX = 0;
+      mouse.targetY = 0;
+    },
+    { passive: true }
+  );
 
   function tick() {
     rafId = null;
 
     if (!isHeroVisible || document.hidden) {
+      return;
+    }
+
+    if (!resizeRenderer()) {
+      rafId = requestAnimationFrame(tick);
       return;
     }
 
@@ -98,6 +126,7 @@
 
   function startLoop() {
     if (rafId === null && isHeroVisible && !document.hidden) {
+      resizeRenderer();
       rafId = requestAnimationFrame(tick);
     }
   }
@@ -119,10 +148,15 @@
           stopLoop();
         }
       },
-      { rootMargin: '50px 0px', threshold: 0 }
+      { rootMargin: '80px 0px', threshold: 0 }
     );
     heroObserver.observe(hero);
   }
+
+  const resizeObserver = new ResizeObserver(() => {
+    resizeRenderer();
+  });
+  resizeObserver.observe(canvas);
 
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) {
@@ -132,14 +166,8 @@
     }
   });
 
+  resizeRenderer();
   startLoop();
-
-  window.addEventListener('resize', () => {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  }, { passive: true });
 
   window.matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change', (e) => {
     if (e.matches) {
