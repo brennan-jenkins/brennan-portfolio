@@ -474,17 +474,16 @@ document.querySelectorAll('[data-carousel]').forEach((root) => {
 
   function goTo(next) {
     index = (next + total) % total;
-    slides.forEach((img, i) => img.classList.toggle('is-active', i === index));
+    slides.forEach((img, i) => {
+      const active = i === index;
+      img.classList.toggle('is-active', active);
+      img.setAttribute('aria-hidden', active ? 'false' : 'true');
+      img.alt = active ? `${title} — screenshot ${i + 1} of ${total}` : '';
+    });
     dots.forEach((dot, i) => {
       const active = i === index;
       dot.classList.toggle('is-active', active);
-      dot.setAttribute('aria-selected', active ? 'true' : 'false');
-    });
-    slides.forEach((img, i) => {
-      img.alt =
-        i === index
-          ? `${title} — screenshot ${i + 1} of ${total}`
-          : '';
+      dot.setAttribute('aria-pressed', active ? 'true' : 'false');
     });
   }
 
