@@ -243,53 +243,67 @@ if (
 ) {
   const dot = document.querySelector('.cursor-dot');
   const ring = document.querySelector('.cursor-ring');
+  const RING_EASE = 0.28;
+  let targetX = 0;
+  let targetY = 0;
   let ringX = 0;
   let ringY = 0;
-  let dotX = 0;
-  let dotY = 0;
-  let cursorRafId = null;
-  let isScrolling = false;
-  let scrollEndTimer = null;
+  let ringRafId = null;
+  let ringReady = false;
 
-  document.addEventListener('mousemove', (e) => {
-    dotX = e.clientX;
-    dotY = e.clientY;
-    if (!cursorRafId && !isScrolling) {
-      cursorRafId = requestAnimationFrame(animateCursor);
+  function cursorTransform(x, y) {
+    return `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%)`;
+  }
+
+  function scheduleRing() {
+    if (ringRafId !== null) return;
+    ringRafId = requestAnimationFrame(animateRing);
+  }
+
+  function snapRing() {
+    ringX = targetX;
+    ringY = targetY;
+    ring?.style.setProperty('transform', cursorTransform(ringX, ringY));
+  }
+
+  function moveCursor(x, y) {
+    targetX = x;
+    targetY = y;
+    if (dot) dot.style.transform = cursorTransform(x, y);
+    if (!ringReady) {
+      ringReady = true;
+      snapRing();
+      return;
     }
-  }, { passive: true });
+    scheduleRing();
+  }
 
-  window.addEventListener(
-    'scroll',
-    () => {
-      isScrolling = true;
-      clearTimeout(scrollEndTimer);
-      scrollEndTimer = setTimeout(() => {
-        isScrolling = false;
-      }, 120);
-    },
+  document.addEventListener(
+    'mousemove',
+    (e) => moveCursor(e.clientX, e.clientY),
     { passive: true }
   );
+
+  document.addEventListener('mousedown', snapRing, { passive: true });
+
+  function animateRing() {
+    ringRafId = null;
+    ringX += (targetX - ringX) * RING_EASE;
+    ringY += (targetY - ringY) * RING_EASE;
+    ring?.style.setProperty('transform', cursorTransform(ringX, ringY));
+
+    if (Math.abs(targetX - ringX) > 0.35 || Math.abs(targetY - ringY) > 0.35) {
+      scheduleRing();
+    } else {
+      snapRing();
+    }
+  }
 
   const hoverTargets = 'a, button, input, textarea, select, .magnetic';
   document.querySelectorAll(hoverTargets).forEach((el) => {
     el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
     el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
   });
-
-  function animateCursor() {
-    if (isScrolling) {
-      cursorRafId = null;
-      return;
-    }
-    ringX += (dotX - ringX) * 0.12;
-    ringY += (dotY - ringY) * 0.12;
-    dot?.style.setProperty('left', `${dotX}px`);
-    dot?.style.setProperty('top', `${dotY}px`);
-    ring?.style.setProperty('left', `${ringX}px`);
-    ring?.style.setProperty('top', `${ringY}px`);
-    cursorRafId = requestAnimationFrame(animateCursor);
-  }
 }
 
 // ─── Magnetic buttons (skip when reduced motion or scrolling) ───
@@ -381,94 +395,20 @@ contactForm?.addEventListener('submit', (e) => {
 const yearEl = document.getElementById('year');
 if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-// ─── Skills marquee (seamless loop: duplicated segments + rAF scroll) ───
-(function initMarquee() {
-  const track = document.querySelector('.marquee-track');
-  const seedGroup = track?.querySelector('.marquee-group');
-  if (!track || !seedGroup) return;
-
-  let offset = 0;
-  let loopWidth = 0;
-  let lastTime = 0;
-  let running = false;
-  const pxPerSecond = prefersReducedMotion ? 40 : 72;
-
-  /** Enough identical copies that the viewport is never empty while we reset offset. */
-  function ensureCopies() {
-    let groups = track.querySelectorAll('.marquee-group');
-    const minTrackWidth = window.innerWidth * 2;
-
-    while (groups.length < 2 || track.scrollWidth < minTrackWidth) {
-      if (groups.length >= 10) break;
-      track.appendChild(seedGroup.cloneNode(true));
-      groups = track.querySelectorAll('.marquee-group');
-    }
+// ─── Skills marquee: pause CSS animation when off-screen ───
+if (!prefersReducedMotion) {
+  const marquee = document.querySelector('.marquee');
+  const marqueeTrack = marquee?.querySelector('.marquee-track');
+  if (marquee && marqueeTrack) {
+    const marqueeObserver = new IntersectionObserver(
+      ([entry]) => {
+        marqueeTrack.style.animationPlayState = entry.isIntersecting ? 'running' : 'paused';
+      },
+      { threshold: 0 }
+    );
+    marqueeObserver.observe(marquee);
   }
-
-  function measure() {
-    ensureCopies();
-    const groups = track.querySelectorAll('.marquee-group');
-    const first = groups[0];
-    const second = groups[1];
-    if (!first) return;
-
-    loopWidth =
-      second && second.offsetLeft > first.offsetLeft
-        ? second.offsetLeft - first.offsetLeft
-        : first.offsetWidth;
-
-    if (loopWidth > 0 && offset <= -loopWidth) {
-      offset = offset % loopWidth;
-      if (offset > 0) offset -= loopWidth;
-    }
-  }
-
-  function tick(now) {
-    requestAnimationFrame(tick);
-
-    if (!loopWidth) {
-      measure();
-      return;
-    }
-
-    if (document.hidden) {
-      lastTime = 0;
-      return;
-    }
-
-    if (!lastTime) lastTime = now;
-    const delta = Math.min((now - lastTime) / 1000, 0.05);
-    lastTime = now;
-
-    offset -= pxPerSecond * delta;
-    while (offset <= -loopWidth) {
-      offset += loopWidth;
-    }
-
-    track.style.transform = `translate3d(${offset}px, 0, 0)`;
-  }
-
-  function start() {
-    if (running) return;
-    running = true;
-    measure();
-    requestAnimationFrame(tick);
-  }
-
-  ensureCopies();
-  measure();
-  if (document.fonts?.ready) {
-    document.fonts.ready.then(() => {
-      measure();
-    });
-  }
-  start();
-
-  window.addEventListener('resize', measure, { passive: true });
-  document.addEventListener('visibilitychange', () => {
-    if (!document.hidden) lastTime = 0;
-  });
-})();
+}
 
 // ─── Project screenshot carousel (Career Mode) ───
 document.querySelectorAll('[data-carousel]').forEach((root) => {
