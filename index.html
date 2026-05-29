@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <!-- SEO: set SITE_ORIGIN to your live URL (also update robots.txt and sitemap.xml) -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta name="googlebot" content="index, follow, max-image-preview:large">
+  <meta name="description" content="UK web developer Brennan Jenkins builds fast, accessible sites with React, TypeScript, and WordPress. Portfolio includes FUTWIZ, Pikawiz, Homebase, and more.">
+  <meta name="author" content="Brennan Jenkins">
+  <meta name="theme-color" content="#06060a">
+  <meta name="color-scheme" content="dark">
+  <meta name="format-detection" content="telephone=no">
+  <title>Brennan Jenkins | Web Developer — React, TypeScript &amp; WordPress</title>
+  <link rel="canonical" href="https://brennanjenkins.com/">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="assets/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" sizes="180x180">
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="sitemap" type="application/xml" title="Sitemap" href="sitemap.xml">
+  <link rel="alternate" type="application/pdf" href="assets/cv.pdf" title="Brennan Jenkins CV (PDF)">
+  <link rel="me" href="https://github.com/brennan-jenkins">
+  <link rel="me" href="https://www.linkedin.com/in/brennan-jenkins-1994/">
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="en_GB">
+  <meta property="og:site_name" content="Brennan Jenkins">
+  <meta property="og:title" content="Brennan Jenkins | Web Developer">
+  <meta property="og:description" content="UK web developer building high-performance React, TypeScript, and WordPress experiences. View portfolio work including FUTWIZ and Pikawiz.">
+  <meta property="og:url" content="https://brennanjenkins.com/">
+  <meta property="og:image" content="https://brennanjenkins.com/assets/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Brennan Jenkins — Web Developer portfolio">
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Brennan Jenkins | Web Developer">
+  <meta name="twitter:description" content="UK web developer building high-performance React, TypeScript, and WordPress experiences.">
+  <meta name="twitter:image" content="https://brennanjenkins.com/assets/og-image.png">
+  <meta name="twitter:image:alt" content="Brennan Jenkins — Web Developer portfolio">
+  <script type="application/ld+json" src="schema.json"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <div class="grain" aria-hidden="true"></div>
+  <div class="cursor-dot" aria-hidden="true"></div>
+  <div class="cursor-ring" aria-hidden="true"></div>
+
+  <header class="site-header" id="header">
+    <nav class="nav container" aria-label="Main navigation">
+      <a href="#hero" class="nav-logo" aria-label="Brennan Jenkins — home">
+        <span aria-hidden="true">BJ<span class="nav-logo-accent">.</span></span>
+      </a>
+      <button
+        type="button"
+        class="nav-toggle"
+        aria-label="Open menu"
+        aria-expanded="false"
+        aria-controls="mobile-nav-overlay"
+      >
+        <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
+      </button>
+    </nav>
+  </header>
+
+  <div
+    class="mobile-nav-overlay"
+    id="mobile-nav-overlay"
+    aria-hidden="true"
+    inert
+  >
+    <div class="mobile-nav-panel">
+      <ul class="nav-links" id="primary-navigation">
+        <li><a href="#about" class="nav-link">About</a></li>
+        <li><a href="#skills" class="nav-link">Skills</a></li>
+        <li><a href="#projects" class="nav-link">Work</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+        <li><a href="#cv" class="nav-cta">Resume</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <main id="main-content" tabindex="-1">
+    <!-- HERO -->
+    <section id="hero" class="hero" aria-label="Introduction">
+      <canvas id="heroCanvas" aria-hidden="true" role="presentation"></canvas>
+      <div class="hero-glow hero-glow--1" aria-hidden="true"></div>
+      <div class="hero-glow hero-glow--2" aria-hidden="true"></div>
+
+      <div class="hero-content container">
+        <p class="hero-eyebrow reveal">Web Developer &amp; Creative Technologist</p>
+        <h1 class="hero-title reveal reveal-delay-1">
+          <span class="visually-hidden">Brennan Jenkins — </span>
+          I craft <span class="text-gradient">digital</span><br>
+          experiences that <em>linger</em>
+        </h1>
+        <p class="hero-sub reveal reveal-delay-2">
+          Hi, I'm <strong>Brennan Jenkins</strong> — I build fast, expressive web and mobile
+          experiences from gaming platforms to retail and agency sites.
+        </p>
+        <div class="hero-actions reveal reveal-delay-3">
+          <a href="#projects" class="btn btn-primary magnetic">View my work</a>
+          <a href="#contact" class="btn btn-ghost magnetic">Let's talk</a>
+        </div>
+        <div class="hero-scroll reveal reveal-delay-4" aria-hidden="true">
+          <span>Scroll</span>
+          <div class="hero-scroll-line"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MARQUEE -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span>React</span><span class="marquee-dot">◆</span>
+        <span>TypeScript</span><span class="marquee-dot">◆</span>
+        <span>Tailwind CSS</span><span class="marquee-dot">◆</span>
+        <span>WordPress</span><span class="marquee-dot">◆</span>
+        <span>PHP</span><span class="marquee-dot">◆</span>
+        <span>Figma</span><span class="marquee-dot">◆</span>
+        <span>Git</span><span class="marquee-dot">◆</span>
+        <span>Accessibility</span><span class="marquee-dot">◆</span>
+        <span>React</span><span class="marquee-dot">◆</span>
+        <span>TypeScript</span><span class="marquee-dot">◆</span>
+        <span>Tailwind CSS</span><span class="marquee-dot">◆</span>
+        <span>WordPress</span><span class="marquee-dot">◆</span>
+        <span>PHP</span><span class="marquee-dot">◆</span>
+        <span>Figma</span><span class="marquee-dot">◆</span>
+        <span>Git</span><span class="marquee-dot">◆</span>
+        <span>Accessibility</span><span class="marquee-dot">◆</span>
+      </div>
+    </div>
+
+    <!-- ABOUT -->
+    <section id="about" class="section about" aria-labelledby="about-label about-heading">
+      <div class="container about-grid">
+        <div class="about-visual reveal">
+          <div class="about-card">
+            <div class="about-card-inner">
+              <span class="about-stat-label">Focus</span>
+              <p class="about-stat-value">Interactive<br>web experiences</p>
+            </div>
+            <div class="about-card-accent"></div>
+          </div>
+        </div>
+        <div class="about-copy">
+          <p class="section-label reveal" id="about-label">About me</p>
+          <h2 class="section-title reveal reveal-delay-1" id="about-heading">
+            Turning ideas into <span class="text-gradient">living</span> interfaces
+          </h2>
+          <p class="section-text reveal reveal-delay-2">
+            I'm a passionate web developer who's contributed to products used by millions —
+            from FUTWIZ and Pikawiz to retail store locators and agency sites. I care about
+            performance, accessibility, and interfaces that feel great to use.
+          </p>
+          <p class="section-text reveal reveal-delay-3">
+            When I'm not coding, I'm exploring new creative tools, refining motion design,
+            and hunting for the perfect balance between bold aesthetics and bulletproof performance.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills" class="section skills" aria-labelledby="skills-label skills-heading">
+      <div class="container">
+        <p class="section-label reveal" id="skills-label">Expertise</p>
+        <h2 class="section-title reveal reveal-delay-1" id="skills-heading">Tech I work with</h2>
+        <p class="skills-intro reveal reveal-delay-2">
+          A focused stack for modern front-end roles — plus the CMS and tooling behind the sites in my portfolio.
+        </p>
+
+        <ul class="tech-stack reveal reveal-delay-2" aria-label="Core technologies">
+          <li class="tech-pill tech-pill--ts">TypeScript</li>
+          <li class="tech-pill tech-pill--js">JavaScript</li>
+          <li class="tech-pill tech-pill--react">React</li>
+          <li class="tech-pill tech-pill--html">HTML5</li>
+          <li class="tech-pill tech-pill--css">CSS3</li>
+          <li class="tech-pill tech-pill--tailwind">Tailwind CSS</li>
+          <li class="tech-pill tech-pill--sass">Sass</li>
+          <li class="tech-pill tech-pill--php">PHP</li>
+          <li class="tech-pill tech-pill--wp">WordPress</li>
+          <li class="tech-pill tech-pill--figma">Figma</li>
+          <li class="tech-pill tech-pill--mui">Material UI</li>
+          <li class="tech-pill tech-pill--leaflet">Leaflet</li>
+          <li class="tech-pill tech-pill--git">Git</li>
+          <li class="tech-pill tech-pill--npm">NPM</li>
+          <li class="tech-pill tech-pill--webpack">Webpack</li>
+          <li class="tech-pill tech-pill--eslint">ESLint</li>
+        </ul>
+
+        <ul class="skills-grid">
+          <li class="skill-card reveal">
+            <span class="skill-icon">01</span>
+            <h3>Front-end core</h3>
+            <p>HTML5, CSS3, JavaScript &amp; TypeScript, React, responsive layouts, and accessible component UI.</p>
+          </li>
+          <li class="skill-card reveal reveal-delay-1">
+            <span class="skill-icon">02</span>
+            <h3>Styling &amp; design</h3>
+            <p>Tailwind CSS, Sass, Material UI, and Figma-led design-to-code with strong visual polish.</p>
+          </li>
+          <li class="skill-card reveal reveal-delay-2">
+            <span class="skill-icon">03</span>
+            <h3>CMS &amp; back-end</h3>
+            <p>PHP and WordPress for content-driven sites, plus JSON APIs and map tooling with Leaflet.</p>
+          </li>
+          <li class="skill-card reveal reveal-delay-3">
+            <span class="skill-icon">04</span>
+            <h3>Tooling &amp; delivery</h3>
+            <p>Git, NPM, Webpack, ESLint — reliable builds, clean code, and performance-minded releases.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="section projects" aria-labelledby="projects-label projects-heading">
+      <div class="container">
+        <div class="projects-header">
+          <p class="section-label reveal" id="projects-label">Selected work</p>
+          <h2 class="section-title reveal reveal-delay-1" id="projects-heading">Sites &amp; apps I've helped build</h2>
+        </div>
+
+        <div class="projects-list">
+          <article class="project-card reveal" aria-labelledby="project-1-title">
+            <div class="project-number" aria-hidden="true">01</div>
+            <div class="project-body">
+              <div class="project-tags">
+                <span>FC / FUT</span><span>JavaScript</span><span>High traffic</span>
+              </div>
+              <h3 class="project-title" id="project-1-title">FUTWIZ</h3>
+              <p class="project-desc">
+                Ultimate Team companion for EA FC — squad builder, evolutions, draft simulator,
+                live player prices, tactics, and news for a global community of players.
+              </p>
+              <a href="https://www.futwiz.com/" class="project-link magnetic" target="_blank" rel="noopener noreferrer" aria-label="Visit FUTWIZ (opens in new tab)">
+                <span>Visit site</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+              </a>
+            </div>
+            <div class="project-visual project-visual--screenshot">
+              <img src="assets/projects/futwiz.png" alt="Screenshot of the FUTWIZ website" width="1024" height="556" loading="lazy" decoding="async">
+            </div>
+          </article>
+
+          <article class="project-card reveal" aria-labelledby="project-2-title">
+            <div class="project-number" aria-hidden="true">02</div>
+            <div class="project-body">
+              <div class="project-tags">
+                <span>Pokémon TCG</span><span>Collections</span><span>Real-time data</span>
+              </div>
+              <h3 class="project-title" id="project-2-title">Pikawiz</h3>
+              <p class="project-desc">
+                Pokémon card database and collection manager — track cards, set completion,
+                deck building, and live valuations from latest sale data for raw and graded cards.
+              </p>
+              <a href="https://www.pikawiz.com/" class="project-link magnetic" target="_blank" rel="noopener noreferrer" aria-label="Visit Pikawiz (opens in new tab)">
+                <span>Visit site</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+              </a>
+            </div>
+            <div class="project-visual project-visual--screenshot">
+              <img src="assets/projects/pikawiz.png" alt="Screenshot of the Pikawiz website" width="1024" height="556" loading="lazy" decoding="async">
+            </div>
+          </article>
+
+          <article class="project-card reveal" aria-labelledby="project-3-title">
+            <div class="project-number" aria-hidden="true">03</div>
+            <div class="project-body">
+              <div class="project-tags">
+                <span>Retail</span><span>Store locator</span><span>UX</span>
+              </div>
+              <h3 class="project-title" id="project-3-title">Homebase Store Locator</h3>
+              <p class="project-desc">
+                Store finder for Garden Centre by Homebase — helping customers search and discover
+                locations across the UK with a clear, mobile-friendly journey.
+              </p>
+              <a href="https://www.homebase.co.uk/en-uk/stores" class="project-link magnetic" target="_blank" rel="noopener noreferrer" aria-label="Visit Homebase store locator (opens in new tab)">
+                <span>Visit site</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+              </a>
+            </div>
+            <div class="project-visual project-visual--screenshot">
+              <img src="assets/projects/homebase.png" alt="Screenshot of the Homebase store locator" width="1024" height="531" loading="lazy" decoding="async">
+            </div>
+          </article>
+
+          <article class="project-card reveal" aria-labelledby="project-4-title">
+            <div class="project-number" aria-hidden="true">04</div>
+            <div class="project-body">
+              <div class="project-tags">
+                <span>Building materials</span><span>Brand</span><span>Content</span>
+              </div>
+              <h3 class="project-title" id="project-4-title">Tarmac Blue Circle</h3>
+              <p class="project-desc">
+                Product and brand site for Blue Circle building materials — structured content,
+                responsive layouts, and a polished experience for trade and DIY audiences.
+              </p>
+              <a href="https://tarmac-bluecircle.co.uk/" class="project-link magnetic" target="_blank" rel="noopener noreferrer" aria-label="Visit Tarmac Blue Circle (opens in new tab)">
+                <span>Visit site</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+              </a>
+            </div>
+            <div class="project-visual project-visual--screenshot">
+              <img src="assets/projects/tarmac.png" alt="Screenshot of the Tarmac Blue Circle website" width="1024" height="509" loading="lazy" decoding="async">
+            </div>
+          </article>
+
+          <article class="project-card reveal" aria-labelledby="project-5-title">
+            <div class="project-number" aria-hidden="true">05</div>
+            <div class="project-body">
+              <div class="project-tags">
+                <span>Agency</span><span>Marketing</span><span>Performance</span>
+              </div>
+              <h3 class="project-title" id="project-5-title">Search Laboratory</h3>
+              <p class="project-desc">
+                Digital marketing agency site for a Leeds &amp; London team specialising in SEO, PPC,
+                analytics, and international growth — now part of Havas Market.
+              </p>
+              <a href="https://www.searchlaboratory.com/" class="project-link magnetic" target="_blank" rel="noopener noreferrer" aria-label="Visit Search Laboratory (opens in new tab)">
+                <span>Visit site</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+              </a>
+            </div>
+            <div class="project-visual project-visual--screenshot">
+              <img src="assets/projects/searchlab.png" alt="Screenshot of the Search Laboratory website" width="1024" height="529" loading="lazy" decoding="async">
+            </div>
+          </article>
+
+          <article class="project-card reveal" aria-labelledby="project-6-title">
+            <div class="project-number" aria-hidden="true">06</div>
+            <div class="project-body">
+              <div class="project-tags">
+                <span>Android</span><span>Career Mode</span><span>Mobile</span>
+              </div>
+              <h3 class="project-title" id="project-6-title">FUTWIZ Career Mode</h3>
+              <p class="project-desc">
+                Android companion for offline Career Mode — search any player, track changes,
+                save favourites, compare stats, and level up your football management experience.
+              </p>
+              <a href="https://play.google.com/store/apps/details?id=com.futwiz.career&amp;hl=en_GB" class="project-link magnetic" target="_blank" rel="noopener noreferrer" aria-label="View FUTWIZ Career Mode on Google Play (opens in new tab)">
+                <span>Google Play</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg>
+              </a>
+            </div>
+            <div
+              class="project-visual project-visual--screenshot project-visual--carousel"
+              data-carousel
+              aria-roledescription="carousel"
+              aria-label="FUTWIZ Career Mode app screenshots"
+            >
+              <div class="project-carousel-slides">
+                <img src="assets/projects/career/1.jpg" alt="FUTWIZ Career Mode app screenshot 1 of 5" width="333" height="592" class="is-active" decoding="async">
+                <img src="assets/projects/career/2.jpg" alt="" width="333" height="592" loading="lazy" decoding="async">
+                <img src="assets/projects/career/3.jpg" alt="" width="333" height="592" loading="lazy" decoding="async">
+                <img src="assets/projects/career/4.jpg" alt="" width="333" height="592" loading="lazy" decoding="async">
+                <img src="assets/projects/career/5.jpg" alt="" width="333" height="592" loading="lazy" decoding="async">
+              </div>
+              <div class="project-carousel-dots" role="tablist" aria-label="Choose screenshot">
+                <button type="button" class="is-active" role="tab" aria-selected="true" aria-label="Screenshot 1"></button>
+                <button type="button" role="tab" aria-selected="false" aria-label="Screenshot 2"></button>
+                <button type="button" role="tab" aria-selected="false" aria-label="Screenshot 3"></button>
+                <button type="button" role="tab" aria-selected="false" aria-label="Screenshot 4"></button>
+                <button type="button" role="tab" aria-selected="false" aria-label="Screenshot 5"></button>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="section contact" aria-labelledby="contact-label contact-heading">
+      <div class="container contact-grid">
+        <div class="contact-intro">
+          <p class="section-label reveal" id="contact-label">Contact</p>
+          <h2 class="section-title reveal reveal-delay-1" id="contact-heading">
+            Have a project in <span class="text-gradient">mind?</span>
+          </h2>
+          <p class="section-text reveal reveal-delay-2">
+            Whether it's a freelance build, a collaboration, or just a hello —
+            I'd love to hear from you.
+          </p>
+          <div class="contact-links reveal reveal-delay-3">
+            <a href="mailto:brennans1994@gmail.com" class="contact-email magnetic">brennans1994@gmail.com</a>
+            <nav class="social-links" aria-label="Social media">
+              <a href="https://github.com/brennan-jenkins" class="social-link magnetic" aria-label="GitHub profile">GitHub</a>
+              <a href="https://www.linkedin.com/in/brennan-jenkins-1994/" class="social-link magnetic" aria-label="LinkedIn profile">LinkedIn</a>
+            </nav>
+          </div>
+        </div>
+
+        <form
+          class="contact-form reveal reveal-delay-2"
+          action="#"
+          method="post"
+          aria-describedby="form-hint"
+          novalidate
+        >
+          <p id="form-hint" class="form-hint">All fields are required.</p>
+          <div class="form-group">
+            <label for="name">Name <span class="required-mark" aria-hidden="true">*</span></label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              autocomplete="name"
+              placeholder="Jane Doe"
+              required
+              aria-required="true"
+            >
+          </div>
+          <div class="form-group">
+            <label for="email">Email <span class="required-mark" aria-hidden="true">*</span></label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              autocomplete="email"
+              placeholder="jane@example.com"
+              required
+              aria-required="true"
+              inputmode="email"
+            >
+          </div>
+          <div class="form-group">
+            <label for="message">Message <span class="required-mark" aria-hidden="true">*</span></label>
+            <textarea
+              id="message"
+              name="message"
+              rows="5"
+              placeholder="Tell me about your project..."
+              required
+              aria-required="true"
+            ></textarea>
+          </div>
+          <p id="form-status" class="form-status" role="status" aria-live="polite" aria-atomic="true"></p>
+          <button type="submit" class="btn btn-primary btn-full magnetic">Send message</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- CV -->
+    <section id="cv" class="section cv" aria-labelledby="cv-heading">
+      <div class="container cv-inner reveal">
+        <h2 class="cv-title" id="cv-heading">Ready to dive deeper?</h2>
+        <p class="cv-text">Download my CV for the full story — experience, education, and references.</p>
+        <a
+          href="assets/cv.pdf"
+          download="Brennan-Jenkins-CV.pdf"
+          type="application/pdf"
+          class="btn btn-primary magnetic"
+          aria-label="Download Brennan Jenkins CV (PDF)"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+          Download CV
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container footer-inner">
+      <p>&copy; <span id="year"></span> Brennan Jenkins. Crafted with care.</p>
+      <a href="#hero" class="footer-top magnetic">Back to top ↑</a>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js" defer crossorigin="anonymous"></script>
+  <script src="js/three-animation.js" defer></script>
+  <script src="js/main.js" defer></script>
+</body>
+</html>

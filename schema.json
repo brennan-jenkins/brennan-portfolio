@@ -1,0 +1,65 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://brennanjenkins.com/#website",
+      "url": "https://brennanjenkins.com/",
+      "name": "Brennan Jenkins",
+      "description": "Portfolio of Brennan Jenkins, UK web developer specialising in React, TypeScript, WordPress, and accessible front-end development.",
+      "inLanguage": "en-GB",
+      "publisher": { "@id": "https://brennanjenkins.com/#person" }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://brennanjenkins.com/#person",
+      "name": "Brennan Jenkins",
+      "url": "https://brennanjenkins.com/",
+      "jobTitle": "Web Developer",
+      "email": "brennans1994@gmail.com",
+      "knowsAbout": [
+        "React",
+        "TypeScript",
+        "JavaScript",
+        "WordPress",
+        "PHP",
+        "Tailwind CSS",
+        "Web accessibility",
+        "Front-end development"
+      ],
+      "sameAs": [
+        "https://github.com/brennan-jenkins",
+        "https://www.linkedin.com/in/brennan-jenkins-1994/"
+      ]
+    },
+    {
+      "@type": "ProfilePage",
+      "@id": "https://brennanjenkins.com/#webpage",
+      "url": "https://brennanjenkins.com/",
+      "name": "Brennan Jenkins | Web Developer — React, TypeScript & WordPress",
+      "description": "UK web developer Brennan Jenkins builds fast, accessible sites with React, TypeScript, and WordPress.",
+      "isPartOf": { "@id": "https://brennanjenkins.com/#website" },
+      "about": { "@id": "https://brennanjenkins.com/#person" },
+      "inLanguage": "en-GB",
+      "primaryImageOfPage": {
+        "@type": "ImageObject",
+        "url": "https://brennanjenkins.com/assets/og-image.png",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "ItemList",
+      "@id": "https://brennanjenkins.com/#portfolio",
+      "name": "Selected work",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "item": { "@type": "WebSite", "name": "FUTWIZ", "url": "https://www.futwiz.com/" } },
+        { "@type": "ListItem", "position": 2, "item": { "@type": "WebSite", "name": "Pikawiz", "url": "https://www.pikawiz.com/" } },
+        { "@type": "ListItem", "position": 3, "item": { "@type": "WebSite", "name": "Homebase Store Locator", "url": "https://www.homebase.co.uk/en-uk/stores" } },
+        { "@type": "ListItem", "position": 4, "item": { "@type": "WebSite", "name": "Tarmac Blue Circle", "url": "https://tarmac-bluecircle.co.uk/" } },
+        { "@type": "ListItem", "position": 5, "item": { "@type": "WebSite", "name": "Search Laboratory", "url": "https://www.searchlaboratory.com/" } },
+        { "@type": "ListItem", "position": 6, "item": { "@type": "MobileApplication", "name": "FUTWIZ Career Mode", "url": "https://play.google.com/store/apps/details?id=com.futwiz.career&hl=en_GB" } }
+      ]
+    }
+  ]
+}

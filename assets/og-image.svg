@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="og-title og-desc">
+  <title id="og-title">Brennan Jenkins  Web Developer</title>
+  <desc id="og-desc">Portfolio of Brennan Jenkins, UK web developer specialising in React, TypeScript, and WordPress.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#06060a"/>
+      <stop offset="100%" stop-color="#12121a"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#9575cd"/>
+      <stop offset="55%" stop-color="#cbb8ef"/>
+      <stop offset="100%" stop-color="#a3e635"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="80%" cy="20%" r="55%">
+      <stop offset="0%" stop-color="#9575cd" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#9575cd" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+  <circle cx="1040" cy="520" r="180" fill="#a3e635" fill-opacity="0.12"/>
+  <circle cx="180" cy="120" r="120" fill="#9575cd" fill-opacity="0.2"/>
+  <text x="80" y="280" fill="#e8e6f0" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="88" font-weight="800" letter-spacing="-2">Brennan Jenkins</text>
+  <text x="80" y="360" fill="url(#accent)" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="42" font-weight="600">Web Developer</text>
+  <text x="80" y="430" fill="#a8a3b5" font-family="system-ui, -apple-system, Segoe UI, sans-serif" font-size="28" font-weight="400">React · TypeScript · WordPress · Accessibility</text>
+  <rect x="80" y="500" width="120" height="6" rx="3" fill="url(#accent)"/>
+</svg>
