@@ -687,10 +687,18 @@ body.cursor-hover .cursor-ring {
 
 .marquee-track {
   display: flex;
+  flex-wrap: nowrap;
+  width: max-content;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+}
+
+.marquee-group {
+  display: flex;
+  flex-shrink: 0;
   align-items: center;
   gap: 2rem;
-  width: max-content;
-  animation: marquee 30s linear infinite;
+  padding-inline-end: 2rem;
   font-family: var(--font-display);
   font-size: 0.85rem;
   font-weight: 600;
@@ -700,11 +708,6 @@ body.cursor-hover .cursor-ring {
 }
 
 .marquee-dot { color: var(--accent); font-size: 0.5rem; }
-
-@keyframes marquee {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
 
 /* ─── Sections ─── */
 .section {
@@ -1319,7 +1322,6 @@ html.js-enabled .reveal-delay-4 {
     transform: none;
   }
   html { scroll-behavior: auto; }
-  .marquee-track { animation: none; }
   #heroCanvas { display: none; }
 }
 
